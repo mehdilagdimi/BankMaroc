@@ -1,6 +1,8 @@
 package com.bank.service;
 
+import com.bank.model.Agent;
 import com.bank.model.Client;
+import com.bank.model.ConfirmationToken;
 import com.bank.model.UserRole;
 import com.bank.repository.ClientRepo;
 import jakarta.transaction.Transactional;
@@ -10,19 +12,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class ClientServiceImpl implements ClientService , UserDetailsService {
+public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     private final ClientRepo clientRepo;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public Client saveClient(Client client) {
@@ -30,11 +34,13 @@ public class ClientServiceImpl implements ClientService , UserDetailsService {
         return clientRepo.save(client);
     }
 
-    @Override
+     /*@Override
     public Client getClient(String username) {
         log.info("fetching client {}",username);
         return clientRepo.findByUsername(username);
     }
+
+      */
 
     @Override
     public List<Client> getClients() {
@@ -44,15 +50,23 @@ public class ClientServiceImpl implements ClientService , UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Client client = clientRepo.findByUsername(username);
-        if(client == null){
-            log.error("client not found......");
-            throw new UsernameNotFoundException("client not found......");
-        } else {
-            log.info("client {} found in DB....", username);
+        Optional<Client> client = clientRepo.findByUsername(username);
+        return clientRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Client not found......"));
+    }
+
+    public String signUpClient(Client client){
+        boolean userExists = clientRepo.findByUsername(client.getUsername()).isPresent();
+        if(userExists) {
+            throw new IllegalStateException("Client's username is already used !");
         }
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(UserRole.CLIENT.name()));
-        return new org.springframework.security.core.userdetails.User(client.getUsername(),client.getPassword(), authorities);
+        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword());
+        client.setPassword(encodedPassword);
+        clientRepo.save(client);
+
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(3), client);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        return "the client token is : "+token;
     }
 }

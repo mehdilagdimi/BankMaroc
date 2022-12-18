@@ -1,16 +1,12 @@
 package com.bank;
 
-import com.bank.model.Agent;
-import com.bank.model.Client;
-import com.bank.model.UserRole;
 import com.bank.service.AgentService;
 import com.bank.service.ClientService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class BankApplication {
@@ -20,10 +16,6 @@ public class BankApplication {
 	}
 
 
-	@Bean
-	PasswordEncoder passwordEncoder(){
-		return  new BCryptPasswordEncoder();
-	}
 
 	@Bean
 	CommandLineRunner run(AgentService agentService, ClientService clientService){

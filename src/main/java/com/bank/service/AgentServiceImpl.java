@@ -1,29 +1,33 @@
 package com.bank.service;
 
 import com.bank.model.Agent;
+import com.bank.model.ConfirmationToken;
+import com.bank.model.User;
 import com.bank.model.UserRole;
 import com.bank.repository.AgentRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class AgentServiceImpl implements AgentService, UserDetailsService
-{
+@Primary
+public class AgentServiceImpl implements AgentService, UserDetailsService {
     private final AgentRepo agentRepo;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public Agent saveAgent(Agent agent) {
@@ -31,11 +35,6 @@ public class AgentServiceImpl implements AgentService, UserDetailsService
         return agentRepo.save(agent);
     }
 
-    @Override
-    public Agent getAgent(String username) {
-        log.info("fetching agent {}",username);
-        return agentRepo.findByUsername(username);
-    }
 
     @Override
     public List<Agent> getAgents() {
@@ -45,15 +44,22 @@ public class AgentServiceImpl implements AgentService, UserDetailsService
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Agent agent = agentRepo.findByUsername(username);
-       if(agent == null){
-           log.error("Agent not found......");
-           throw new UsernameNotFoundException("Agent not found......");
-       } else {
-           log.info("Agent {} found in DB....", username);
-       }
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-       authorities.add(new SimpleGrantedAuthority(UserRole.AGENT.name()));
-        return new org.springframework.security.core.userdetails.User(agent.getUsername(),agent.getPassword(), authorities);
+        Optional<Agent> agent = agentRepo.findByUsername(username);
+        return agentRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Agent not found......"));
+    }
+
+    public String signUpUser(Agent agent){
+        boolean userExists = agentRepo.findByUsername(agent.getUsername()).isPresent();
+        if(userExists) {
+            throw new IllegalStateException("username is already used");
+        }
+        String encodedPassword = bCryptPasswordEncoder.encode(agent.getPassword());
+        agent.setPassword(encodedPassword);
+        agentRepo.save(agent);
+
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(3), agent);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        return "the token is : "+token;
     }
 }

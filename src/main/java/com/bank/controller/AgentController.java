@@ -2,6 +2,8 @@ package com.bank.controller;
 
 import com.bank.model.Agent;
 import com.bank.service.AgentService;
+import com.bank.service.RegistrationRequest;
+import com.bank.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -11,11 +13,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RequestMapping("/api")
+@RequestMapping
 @RestController
 @RequiredArgsConstructor
 public class AgentController {
     private final AgentService agentService;
+    private final RegistrationService registrationService;
 
     @GetMapping("/agents")
     public ResponseEntity<List<Agent>> getAgents(){
@@ -28,5 +31,13 @@ public class AgentController {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/agent/save").toUriString());
         return ResponseEntity.created(uri).body(agentService.saveAgent(agent));
     }
+
+
+
+    @PostMapping("/registration/agent")
+    public String register(@RequestBody RegistrationRequest request){
+        return registrationService.register(request);
+    }
+
 
 }
