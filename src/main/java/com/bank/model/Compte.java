@@ -16,8 +16,9 @@ public abstract class Compte {
     @SequenceGenerator(name = "compte_sequence", sequenceName = "compte_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "compte_sequence")
     private Long id;
-    private Boolean enable;
+    private Boolean enable = false;
     private String type;
+    private Long amount;
 
     @ManyToOne
     private Agent agent;
@@ -25,4 +26,9 @@ public abstract class Compte {
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;
 
+    public Compte(String type, Long amount, Client client) {
+        this.type = type;
+        this.amount = amount;
+        this.client = client;
+    }
 }

@@ -1,8 +1,7 @@
-package com.bank.service.Registration;
+package com.bank.service.helpers;
 
 import com.bank.model.UserRole;
 import lombok.*;
-import org.springframework.context.annotation.Bean;
 
 @Getter
 @EqualsAndHashCode

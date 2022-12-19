@@ -3,7 +3,6 @@ package com.bank.service;
 import com.bank.model.Agent;
 import com.bank.model.ConfirmationToken;
 import com.bank.repository.AgentRepo;
-import com.bank.service.Registration.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,9 +1,9 @@
-package com.bank.service.Registration;
+package com.bank.service;
 
 import com.bank.model.Agent;
 import com.bank.model.Client;
-import com.bank.service.AgentServiceImpl;
-import com.bank.service.ClientServiceImpl;
+import com.bank.service.helpers.EmailValidator;
+import com.bank.service.helpers.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +27,6 @@ public class RegistrationService {
                     new Client(request.getUsername(), request.getEmail(), request.getPassword(), request.getUserRole(), request.getCIN(), request.getTelephone())
             );
         }
-        return request.getUserRole().name() ;
+        return request.getUserRole().name();
     }
 }

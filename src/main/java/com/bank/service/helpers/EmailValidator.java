@@ -1,4 +1,4 @@
-package com.bank.service.Registration;
+package com.bank.service.helpers;
 
 import org.springframework.stereotype.Service;
 

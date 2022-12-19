@@ -2,8 +2,8 @@ package com.bank.controller;
 
 import com.bank.model.Agent;
 import com.bank.service.AgentService;
-import com.bank.service.Registration.RegistrationRequest;
-import com.bank.service.Registration.RegistrationService;
+import com.bank.service.helpers.RegistrationRequest;
+import com.bank.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;

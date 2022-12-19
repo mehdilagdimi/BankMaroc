@@ -3,7 +3,6 @@ package com.bank.service;
 import com.bank.model.Client;
 import com.bank.model.ConfirmationToken;
 import com.bank.repository.ClientRepo;
-import com.bank.service.Registration.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +62,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         clientRepo.save(client);
 
         String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(3), client);
+        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10), client);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         return "the client token is : "+token;
     }
