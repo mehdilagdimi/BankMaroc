@@ -1,8 +1,9 @@
-package com.bank.service;
+package com.bank.service.Registration;
 
 import com.bank.model.Agent;
 import com.bank.model.Client;
-import com.bank.model.UserRole;
+import com.bank.service.AgentServiceImpl;
+import com.bank.service.ClientServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

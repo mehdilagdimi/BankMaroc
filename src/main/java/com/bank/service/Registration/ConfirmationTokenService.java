@@ -1,4 +1,4 @@
-package com.bank.service;
+package com.bank.service.Registration;
 
 import com.bank.model.ConfirmationToken;
 import com.bank.repository.ConfirmationTokenRepo;

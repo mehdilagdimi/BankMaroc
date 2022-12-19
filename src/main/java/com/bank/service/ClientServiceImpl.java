@@ -1,14 +1,12 @@
 package com.bank.service;
 
-import com.bank.model.Agent;
 import com.bank.model.Client;
 import com.bank.model.ConfirmationToken;
-import com.bank.model.UserRole;
 import com.bank.repository.ClientRepo;
+import com.bank.service.Registration.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
