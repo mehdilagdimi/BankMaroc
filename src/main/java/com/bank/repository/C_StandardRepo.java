@@ -13,4 +13,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface C_StandardRepo extends JpaRepository<C_Standard, Long> {
     Optional<Client> findClientById(Long client_id);
+
+    C_Standard findCStandardById(Long id);
 }

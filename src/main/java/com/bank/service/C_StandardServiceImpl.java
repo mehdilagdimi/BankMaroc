@@ -64,4 +64,18 @@ public class C_StandardServiceImpl implements CompteService{
     public Double Retrait(Double amount) {
         return null;
     }
+
+
+    public C_Standard getCStandardById(Long id){
+        return c_standardRepo.findById(id).orElse(null);
+    }
+
+    public C_Standard updateCStandard(C_Standard c_standard){
+        C_Standard existsStandard = c_standardRepo.findById(c_standard.getId()).orElse(null);
+        existsStandard.setEnable(true);
+        return c_standardRepo.save(existsStandard);
+    }
+
 }
+
+
