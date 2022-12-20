@@ -1,6 +1,7 @@
 package com.bank.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public abstract class Compte {
     private Long id;
     private Boolean enable = false;
     private String type;
-    private Long amount;
+    private Long amount = Long.valueOf(0);
 
     @ManyToOne
     private Agent agent;
@@ -26,9 +27,16 @@ public abstract class Compte {
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    public Compte(String type, Long amount, Client client) {
+    public Compte(String type,  Client client, Agent agent) {
         this.type = type;
-        this.amount = amount;
         this.client = client;
+        this.agent = agent;
+    }
+
+    public Compte(Long id, String type, Client client, Agent agent) {
+        this.id = id;
+        this.type = type;
+        this.client = client;
+        this.agent = agent;
     }
 }

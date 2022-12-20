@@ -1,7 +1,6 @@
 package com.bank.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -20,7 +19,7 @@ public class Client extends User implements UserDetails {
     private String CIN;
     private String telephone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Compte compte;
     private Boolean locked = false;
     private Boolean enabled = false;

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 public class C_StandardServiceImpl implements CompteService{
     private final C_StandardRepo c_standardRepo;
+    private final ClientRepo clientRepo;
 
     public String addCompteByClient(C_Standard standard) throws Exception {
 
@@ -38,12 +39,15 @@ public class C_StandardServiceImpl implements CompteService{
        */
         if(request.getType().equalsIgnoreCase("Standard")){
             try {
+
             addCompteByClient(
-                    new C_Standard(request.getType(), request.getAmount(), request.getClient_id())
+                    new C_Standard(request.getType(), request.getClient_id(), request.getAgent_id())
             );
-            return "it has saved successfully ";
+               // clientRepo.updateCompte(request.getClient_id().getId(),new C_Standard(request.getId(), request.getType(), request.getAmount(), request.getClient_id(), request.getAgent_id()));
+
+            return "it has saved successfully & agent id = "+request.getClient_id();
             }catch (Exception ex){
-                throw new Exception("something wrong in add .............");
+                throw new Exception(ex.getMessage());
             }
 
         } else {

@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 public class C_Professionnel extends Compte {
 
-    private Long numPremiunCarte;
-    private Long numIntCarte;
+    public C_Professionnel( String type,Client client_id, Agent agent) {
+        super(type, client_id, agent);
+    }
 
-    public C_Professionnel( String type, Long amount,Client client_id) {
-        super(type,amount, client_id);
+    public C_Professionnel( Long id,String type, Client client_id, Agent agent_id) {
+        super(id, type, client_id, agent_id);
     }
 }
