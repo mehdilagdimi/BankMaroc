@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,6 +25,9 @@ public abstract class Compte {
 
     @ManyToOne
     private Agent agent;
+
+    @OneToMany(mappedBy = "compte")
+    private List<Carte> cartes;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;
