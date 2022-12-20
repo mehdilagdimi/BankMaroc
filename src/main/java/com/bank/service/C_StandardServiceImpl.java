@@ -35,21 +35,17 @@ public class C_StandardServiceImpl implements CompteService{
         if(!ClientExists){
             throw new Exception("this id client "+request.getClient_id().getId()+" not found !!!!!");
         }
-
        */
         if(request.getType().equalsIgnoreCase("Standard")){
             try {
-
             addCompteByClient(
                     new C_Standard(request.getType(), request.getClient_id(), request.getAgent_id())
             );
                // clientRepo.updateCompte(request.getClient_id().getId(),new C_Standard(request.getId(), request.getType(), request.getAmount(), request.getClient_id(), request.getAgent_id()));
-
             return "it has saved successfully & agent id = "+request.getClient_id();
             }catch (Exception ex){
                 throw new Exception(ex.getMessage());
             }
-
         } else {
             return "check the type of the account must be Standard";
         }

@@ -20,13 +20,13 @@ public class AgentController {
     private final AgentService agentService;
     private final RegistrationService registrationService;
 
-    @GetMapping("/agents")
+    @GetMapping("/registration/agents")
     public ResponseEntity<List<Agent>> getAgents(){
         return ResponseEntity.ok().body(agentService.getAgents());
     }
 
 
-    @PostMapping("/agent/save")
+    @PostMapping("/registration/agent/save")
     public ResponseEntity<Agent> saveAgent(@RequestBody Agent agent){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/agent/save").toUriString());
         return ResponseEntity.created(uri).body(agentService.saveAgent(agent));

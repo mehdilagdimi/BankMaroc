@@ -22,6 +22,8 @@ public abstract class Compte {
     private Boolean enable = false;
     private String type;
     private Long amount = Long.valueOf(0);
+    @Column(length = 24)
+    private Long numC;
 
     @ManyToOne
     private Agent agent;

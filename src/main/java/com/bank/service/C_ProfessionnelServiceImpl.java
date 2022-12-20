@@ -66,4 +66,14 @@ public class C_ProfessionnelServiceImpl implements CompteService{
     }
 
 
+    public C_Professionnel getCStandardById(Long id){
+        return c_professionnelRepo.findById(id).orElse(null);
+    }
+
+    public C_Professionnel updateCStandard(C_Standard c_standard){
+        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_standard.getId()).orElse(null);
+        existsProfessionnel.setEnable(true);
+        return c_professionnelRepo.save(existsProfessionnel);
+    }
+
 }

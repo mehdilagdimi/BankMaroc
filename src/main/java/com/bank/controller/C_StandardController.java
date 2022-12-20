@@ -1,7 +1,10 @@
 package com.bank.controller;
 
 import com.bank.model.C_Standard;
+import com.bank.model.Carte;
 import com.bank.service.C_StandardServiceImpl;
+import com.bank.service.CarteService;
+import com.bank.service.helpers.CarteRequest;
 import com.bank.service.helpers.CompteRequest;
 import com.bank.service.helpers.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +15,17 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class C_StandardController {
     private final C_StandardServiceImpl c_standardService;
+    private final CarteService carteService;
 
     @PostMapping("/registration/addCompteStandard")
     public String addCompteStandard(@RequestBody CompteRequest request) throws Exception {
-        return c_standardService.saveAccount(request);
+        String compte = c_standardService.saveAccount(request);
+        return compte ;
+    }
+
+    @PostMapping("/registration/addCarteVisa")
+    public String addCarteVisa(@RequestBody CompteRequest request) throws Exception {
+        return carteService.saveCarte(request);
     }
 
     @GetMapping("/registration/standard/{id}")
