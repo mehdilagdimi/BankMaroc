@@ -1,5 +1,6 @@
 package com.bank.controller;
 
+import com.bank.model.C_Professionnel;
 import com.bank.model.C_Standard;
 import com.bank.model.Carte;
 import com.bank.service.C_StandardServiceImpl;
@@ -9,6 +10,8 @@ import com.bank.service.helpers.CompteRequest;
 import com.bank.service.helpers.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping
 @RestController
@@ -33,10 +36,15 @@ public class C_StandardController {
         return c_standardService.getCStandardById(id);
     }
 
-     @PutMapping("/registration/updateCompteStandard")
+     @PutMapping("/registration/updateCompte")
     public C_Standard updateStandard(@RequestBody C_Standard c_standard){
         return c_standardService.updateCStandard(c_standard);
      }
+
+    @GetMapping("/registration/getStandards")
+    public List<C_Standard> getAllStandards(){
+        return c_standardService.getAllStandards();
+    }
 
 }
 

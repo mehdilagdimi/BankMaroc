@@ -18,22 +18,23 @@ public class CarteService {
     private final CarteRepo carteRepo;
     public String addCarte(Carte carte){
         carteRepo.save(carte);
-        log.info("a carte {} et de type {}", carte.getId(),carte.getCompte());
+        log.info("a carte {} et de type", carte.getId());
         return "adddddddddddddddddeeed";
     }
 
     public String saveCarte(CompteRequest request) throws Exception {
 
-        if(request.getCarte_type().equalsIgnoreCase("GAB Visa")){
+        if(request.getCarte_type().equalsIgnoreCase("GAB Visa") ){
             try {
                 addCarte(
-                        new Carte(request.getCarte_type(),request.getAmount(), request.getCompte())
+                        new Carte(request.getCarte_type(),request.getAmount(), request.getCompte_id())
                 );
-                return "the carte has saved successfully & agent id = "+request.getCarte_type();
+                return "the carte has saved successfully of the account type "+request.getCompte_id()+"\n carte: "+request.getCarte_type();
             }catch (Exception ex){
                 throw new Exception(ex.getMessage());
             }
-        } else {
+        }
+        else {
             return "check the type of the carte must be GAB Visa";
         }
     }

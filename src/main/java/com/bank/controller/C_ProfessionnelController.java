@@ -8,6 +8,8 @@ import com.bank.service.helpers.CompteRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +20,18 @@ public class C_ProfessionnelController {
     @PostMapping("/registration/addCompteProfessionnel")
     public String addCompteProfessionnel(@RequestBody CompteRequest request) throws Exception {
         return c_professionnelService.saveAccount(request);
+    }
+
+    @GetMapping("/registration/getProfessionnel")
+    public List<C_Professionnel> getAllProfessionel(){
+        return c_professionnelService.getAllProfessionnels();
+    }
+
+
+
+    @PutMapping("/registration/depotAmount")
+    public C_Professionnel depotAmountByAgent(@RequestBody C_Professionnel c_professionnel){
+        return c_professionnelService.depotByAgent(c_professionnel);
     }
 
     @PutMapping("/registration/updateCompteProfessionnel")

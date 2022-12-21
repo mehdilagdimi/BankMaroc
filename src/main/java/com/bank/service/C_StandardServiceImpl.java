@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +24,10 @@ import org.springframework.stereotype.Service;
 public class C_StandardServiceImpl implements CompteService{
     private final C_StandardRepo c_standardRepo;
     private final ClientRepo clientRepo;
+
+    public List<C_Standard> getAllStandards(){
+        return c_standardRepo.findAll();
+    }
 
     public String addCompteByClient(C_Standard standard) throws Exception {
 
@@ -51,10 +57,7 @@ public class C_StandardServiceImpl implements CompteService{
         }
     }
 
-    @Override
-    public Double depot(Double amount) {
-        return null;
-    }
+
 
     @Override
     public Double Retrait(Double amount) {

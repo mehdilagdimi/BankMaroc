@@ -28,6 +28,6 @@ public class CompteRequest {
     private final Long retraitA;
     private final Long achatQ;
     private final Long achatA;
-    private final Compte compte;
+    private final Compte compte_id;
 
 }
