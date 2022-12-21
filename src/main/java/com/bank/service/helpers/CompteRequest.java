@@ -20,6 +20,7 @@ public class CompteRequest {
     private final String type;
     private final Long amount;
     private final Agent agent_id;
+    private final Long numC;
 
     //carte
     private final String carte_type;
@@ -27,6 +28,6 @@ public class CompteRequest {
     private final Long retraitA;
     private final Long achatQ;
     private final Long achatA;
-    private final Compte compte_id;
+    private final Compte compte;
 
 }

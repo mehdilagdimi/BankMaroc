@@ -23,8 +23,9 @@ public class RegistrationService {
                     new Agent(request.getUsername(), request.getEmail(), request.getPassword(), request.getUserRole())
             );
         } else if(request.getUserRole().name().equals("CLIENT")){
+
             return clientService.signUpClient(
-                    new Client(request.getUsername(), request.getEmail(), request.getPassword(), request.getUserRole(), request.getCIN(), request.getTelephone())
+                    new Client(request.getUsername(), request.getEmail(), request.getPassword(), request.getUserRole(), request.getCIN(), request.getImage(), request.getTelephone())
             );
         }
         return request.getUserRole().name();

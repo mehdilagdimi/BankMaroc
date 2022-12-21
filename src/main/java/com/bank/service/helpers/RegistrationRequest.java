@@ -13,5 +13,6 @@ public class RegistrationRequest {
     private final String password;
     private final UserRole userRole;
     private final String CIN;
+    private final byte[] image;
     private final String telephone;
 }

@@ -39,7 +39,7 @@ public class C_StandardServiceImpl implements CompteService{
         if(request.getType().equalsIgnoreCase("Standard")){
             try {
             addCompteByClient(
-                    new C_Standard(request.getType(), request.getClient_id(), request.getAgent_id())
+                    new C_Standard(request.getType(), request.getClient_id(), request.getAgent_id(), request.getNumC())
             );
                // clientRepo.updateCompte(request.getClient_id().getId(),new C_Standard(request.getId(), request.getType(), request.getAmount(), request.getClient_id(), request.getAgent_id()));
             return "it has saved successfully & agent id = "+request.getClient_id();

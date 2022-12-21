@@ -17,8 +17,4 @@ import java.util.Optional;
 public interface ClientRepo extends JpaRepository<Client, Long> {
     Optional<Client> findByUsername(String username);
 
-    @Modifying
-    @Query("update Client c set c.compte = :compte where c.id = :id")
-    void updateCompte(@Param(value = "id") long id, @Param(value = "compte") Compte compte);
-
 }

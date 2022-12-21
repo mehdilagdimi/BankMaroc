@@ -2,6 +2,8 @@ package com.bank.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,9 +16,13 @@ import java.util.Collections;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Data
 
 public class Client extends User implements UserDetails {
     private String CIN;
+    @Lob
+    private byte[] image;
     private String telephone;
 
     @OneToOne(cascade = CascadeType.PERSIST)
@@ -24,8 +30,9 @@ public class Client extends User implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    public Client(String username, String email, String password, UserRole userRole, String CIN, String telephone) {
+    public Client(String username, String email, String password, UserRole userRole, String CIN,byte[] image, String telephone) {
         super(username, email, password, userRole);
+        this.image = image;
         this.CIN = CIN;
         this.telephone = telephone;
     }

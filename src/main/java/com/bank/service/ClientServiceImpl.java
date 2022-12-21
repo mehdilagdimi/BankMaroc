@@ -11,7 +11,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -20,6 +26,8 @@ import java.util.*;
 @RequiredArgsConstructor
 @Transactional
 public class ClientServiceImpl implements ClientService, UserDetailsService {
+
+    public static String uploadDir = System.getProperty("client.dir")+"src/main/resources/static";
 
     private final ClientRepo clientRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -54,16 +62,29 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     public String signUpClient(Client client){
         boolean userExists = clientRepo.findByUsername(client.getUsername()).isPresent();
+        StringBuilder fileNames = new StringBuilder();
+       // String fileName = client.getId()+image.getOriginalFilename().substring(image.getOriginalFilename().length()-4);
+        //Path fileNameAndPath = Paths.get(uploadDir, fileName);
+
         if(userExists) {
             throw new IllegalStateException("Client's username is already used !");
         }
+
         String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword());
+       /* try{
+            Files.write(fileNameAndPath, image.getBytes());
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+
+        */
         client.setPassword(encodedPassword);
+      //  client.setCIN(fileName);
         clientRepo.save(client);
 
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10), client);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-        return "the client token is : "+token;
+        return "the client token is : "+token ;
     }
 }

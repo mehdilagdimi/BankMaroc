@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @AllArgsConstructor
 public class C_Professionnel extends Compte {
 
-    public C_Professionnel( String type,Client client_id, Agent agent) {
-        super(type, client_id, agent);
+    public C_Professionnel( String type,Client client_id, Agent agent, Long numC) {
+        super(type, client_id, agent, numC);
     }
 
     public C_Professionnel( Long id,String type, Client client_id, Agent agent_id) {

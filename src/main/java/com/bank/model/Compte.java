@@ -34,10 +34,11 @@ public abstract class Compte {
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    public Compte(String type,  Client client, Agent agent) {
+    public Compte(String type,  Client client, Agent agent, Long numC) {
         this.type = type;
         this.client = client;
         this.agent = agent;
+        this.numC = numC;
     }
 
     public Compte(Long id, String type, Client client, Agent agent) {

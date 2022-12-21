@@ -33,7 +33,7 @@ public class C_StandardController {
         return c_standardService.getCStandardById(id);
     }
 
-     @PutMapping("/registration/updateCompte")
+     @PutMapping("/registration/updateCompteStandard")
     public C_Standard updateStandard(@RequestBody C_Standard c_standard){
         return c_standardService.updateCStandard(c_standard);
      }

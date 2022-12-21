@@ -39,7 +39,7 @@ public class C_ProfessionnelServiceImpl implements CompteService{
             try {
 
                 addCompteByClient(
-                        new C_Professionnel(request.getType(), request.getClient_id(), request.getAgent_id())
+                        new C_Professionnel(request.getType(), request.getClient_id(), request.getAgent_id(), request.getNumC())
                 );
                 // clientRepo.updateCompte(request.getClient_id().getId(),new C_Standard(request.getId(), request.getType(), request.getAmount(), request.getClient_id(), request.getAgent_id()));
 
@@ -70,8 +70,8 @@ public class C_ProfessionnelServiceImpl implements CompteService{
         return c_professionnelRepo.findById(id).orElse(null);
     }
 
-    public C_Professionnel updateCStandard(C_Standard c_standard){
-        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_standard.getId()).orElse(null);
+    public C_Professionnel updateCProfessionnel(C_Professionnel c_professionnel){
+        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_professionnel.getId()).orElse(null);
         existsProfessionnel.setEnable(true);
         return c_professionnelRepo.save(existsProfessionnel);
     }

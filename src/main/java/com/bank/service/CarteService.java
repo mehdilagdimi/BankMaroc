@@ -18,7 +18,7 @@ public class CarteService {
     private final CarteRepo carteRepo;
     public String addCarte(Carte carte){
         carteRepo.save(carte);
-        log.info("a carte {} et de type {}", carte.getId(),carte.getCarte_type());
+        log.info("a carte {} et de type {}", carte.getId(),carte.getCompte());
         return "adddddddddddddddddeeed";
     }
 
@@ -27,7 +27,7 @@ public class CarteService {
         if(request.getCarte_type().equalsIgnoreCase("GAB Visa")){
             try {
                 addCarte(
-                        new Carte(request.getCarte_type(),request.getAmount(), request.getCompte_id())
+                        new Carte(request.getCarte_type(),request.getAmount(), request.getCompte())
                 );
                 return "the carte has saved successfully & agent id = "+request.getCarte_type();
             }catch (Exception ex){
