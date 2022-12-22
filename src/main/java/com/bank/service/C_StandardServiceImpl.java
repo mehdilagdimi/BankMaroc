@@ -57,8 +57,6 @@ public class C_StandardServiceImpl implements CompteService{
         }
     }
 
-
-
     @Override
     public Double Retrait(Double amount) {
         return null;
@@ -75,6 +73,29 @@ public class C_StandardServiceImpl implements CompteService{
         return c_standardRepo.save(existsStandard);
     }
 
+
+
+    // depot By Agent !!!!!!!
+    public C_Standard depotByAgent(C_Standard c_standard) {
+        C_Standard existsStandard = c_standardRepo.findById(c_standard.getId()).orElse(null);
+        existsStandard.setAmount(c_standard.getAmount());
+        return c_standardRepo.save(existsStandard);
+    }
+
+
+    public String retraitByClient(C_Standard c_standard) {
+        C_Standard existsStandard = c_standardRepo.findById(c_standard.getId()).orElse(null);
+        if(existsStandard.getAmount() > c_standard.getAmount()){
+            existsStandard.setAmount(existsStandard.getAmount()-c_standard.getAmount());
+            log.info("the old amount {} > new amount {} ", existsStandard.getAmount(), c_standard.getAmount());
+            c_standardRepo.save(existsStandard);
+            return "le retrait est bien passé , votre solde actuel est :"+existsStandard.getAmount();
+        }
+        else {
+            log.info("the old amount {} < new amount {}", existsStandard.getAmount(), c_standard.getAmount());
+            return  "Sorry "+c_standard.getAmount() +" est plus grand que votre solde ( "+existsStandard.getAmount()+" )";
+        }
+    }
 }
 
 

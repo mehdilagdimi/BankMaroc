@@ -29,7 +29,7 @@ public class C_ProfessionnelController {
 
 
 
-    @PutMapping("/registration/depotAmount")
+    @PutMapping("/registration/depotAmountProfessionnel")
     public C_Professionnel depotAmountByAgent(@RequestBody C_Professionnel c_professionnel){
         return c_professionnelService.depotByAgent(c_professionnel);
     }
@@ -37,5 +37,10 @@ public class C_ProfessionnelController {
     @PutMapping("/registration/updateCompteProfessionnel")
     public C_Professionnel updateProfessionnel(@RequestBody C_Professionnel c_professionnel){
         return c_professionnelService.updateCProfessionnel(c_professionnel);
+    }
+
+    @PutMapping("/registration/retraitAmountProfessionnel")
+    public String retraitAmountByClient(@RequestBody C_Professionnel c_professionnel){
+        return c_professionnelService.retraitByClient(c_professionnel);
     }
 }

@@ -18,7 +18,6 @@ public class CompteRequest {
     private final boolean enable = false;
     private final Client client_id;
     private final String type;
-    private final Long amount;
     private final Agent agent_id;
     private final Long numC;
 
@@ -28,6 +27,6 @@ public class CompteRequest {
     private final Long retraitA;
     private final Long achatQ;
     private final Long achatA;
-    private final Compte compte_id;
+    private final Compte compte;
 
 }

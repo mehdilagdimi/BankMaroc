@@ -76,7 +76,18 @@ public class C_ProfessionnelServiceImpl implements CompteService{
     }
 
 
-
+    public String retraitByClient(C_Professionnel c_professionnel) {
+        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_professionnel.getId()).orElse(null);
+        if (existsProfessionnel.getAmount() > c_professionnel.getAmount()) {
+            existsProfessionnel.setAmount(existsProfessionnel.getAmount() - c_professionnel.getAmount());
+            log.info("the old amount {} > new amount {} ", existsProfessionnel.getAmount(), c_professionnel.getAmount());
+            c_professionnelRepo.save(existsProfessionnel);
+            return "le retrait est bien passé , votre solde actuel est :" + existsProfessionnel.getAmount();
+        } else {
+            log.info("the old amount {} < new amount {}", existsProfessionnel.getAmount(), c_professionnel.getAmount());
+            return "Sorry " + c_professionnel.getAmount() + " est plus grand que votre solde ( " + existsProfessionnel.getAmount() + " )";
+        }
+    }
 
     public C_Professionnel getCProfessionnelById(Long id){
         return c_professionnelRepo.findById(id).orElse(null);

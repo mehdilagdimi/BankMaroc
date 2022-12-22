@@ -36,7 +36,7 @@ public class C_StandardController {
         return c_standardService.getCStandardById(id);
     }
 
-     @PutMapping("/registration/updateCompte")
+     @PutMapping("/registration/updateCompteStandard")
     public C_Standard updateStandard(@RequestBody C_Standard c_standard){
         return c_standardService.updateCStandard(c_standard);
      }
@@ -44,6 +44,15 @@ public class C_StandardController {
     @GetMapping("/registration/getStandards")
     public List<C_Standard> getAllStandards(){
         return c_standardService.getAllStandards();
+    }
+
+    @PutMapping("/registration/depotAmountStandard")
+    public C_Standard depotAmountByAgent(@RequestBody C_Standard c_standard){
+        return c_standardService.depotByAgent(c_standard);
+    }
+    @PutMapping("/registration/retraitAmountStandard")
+    public String retraitAmountByClient(@RequestBody C_Standard c_standard){
+        return c_standardService.retraitByClient(c_standard);
     }
 
 }
