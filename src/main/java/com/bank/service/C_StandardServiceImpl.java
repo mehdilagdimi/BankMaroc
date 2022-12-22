@@ -78,7 +78,7 @@ public class C_StandardServiceImpl implements CompteService{
     // depot By Agent !!!!!!!
     public C_Standard depotByAgent(C_Standard c_standard) {
         C_Standard existsStandard = c_standardRepo.findById(c_standard.getId()).orElse(null);
-        existsStandard.setAmount(c_standard.getAmount());
+        existsStandard.setAmount(existsStandard.getAmount()+c_standard.getAmount());
         return c_standardRepo.save(existsStandard);
     }
 

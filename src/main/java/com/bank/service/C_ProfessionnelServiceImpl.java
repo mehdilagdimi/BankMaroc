@@ -65,7 +65,7 @@ public class C_ProfessionnelServiceImpl implements CompteService{
     // depot By Agent !!!!!!!
     public C_Professionnel depotByAgent(C_Professionnel c_professionnel) {
         C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_professionnel.getId()).orElse(null);
-        existsProfessionnel.setAmount(c_professionnel.getAmount());
+        existsProfessionnel.setAmount(existsProfessionnel.getAmount()+c_professionnel.getAmount());
         return c_professionnelRepo.save(existsProfessionnel);
     }
 
