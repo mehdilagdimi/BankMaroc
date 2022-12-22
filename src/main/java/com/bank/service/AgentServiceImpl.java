@@ -2,6 +2,7 @@ package com.bank.service;
 
 import com.bank.model.Agent;
 import com.bank.model.ConfirmationToken;
+import com.bank.model.User;
 import com.bank.repository.AgentRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.*;
 @Transactional
 @Slf4j
 @Primary
-public class AgentServiceImpl implements AgentService, UserDetailsService {
+public class AgentServiceImpl implements AgentService {
     private final AgentRepo agentRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
@@ -39,10 +40,10 @@ public class AgentServiceImpl implements AgentService, UserDetailsService {
         return agentRepo.findAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Agent> agent = agentRepo.findByUsername(username);
-        return agentRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Agent not found......"));
+
+    public User loadUserByEmail(String email) throws UsernameNotFoundException {
+//        Optional<Agent> agent = agentRepo.findByUsername(username);
+        return agentRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Agent not found......"));
     }
 
     public String signUpUser(Agent agent){

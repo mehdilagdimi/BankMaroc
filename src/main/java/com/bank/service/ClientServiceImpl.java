@@ -2,6 +2,7 @@ package com.bank.service;
 
 import com.bank.model.Client;
 import com.bank.model.ConfirmationToken;
+import com.bank.model.User;
 import com.bank.repository.ClientRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class ClientServiceImpl implements ClientService, UserDetailsService {
+public class ClientServiceImpl implements ClientService {
 
     private final ClientRepo clientRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -45,22 +46,25 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         return clientRepo.findAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Client> client = clientRepo.findByUsername(username);
-        return clientRepo.findByUsername(username)
+    public User loadUserByEmail(String email) throws UsernameNotFoundException {
+//        Optional<Client> client = clientRepo.findByUsername(username);
+        return clientRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Client not found......"));
     }
 
     public String signUpClient(Client client){
+        System.out.println( "inside client registration signup");
+
         boolean userExists = clientRepo.findByUsername(client.getUsername()).isPresent();
         if(userExists) {
             throw new IllegalStateException("Client's username is already used !");
         }
+        System.out.println( "inside client registration signup");
+
         String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword());
         client.setPassword(encodedPassword);
         clientRepo.save(client);
-
+        System.out.println( "inside client registration signup");
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10), client);
         confirmationTokenService.saveConfirmationToken(confirmationToken);

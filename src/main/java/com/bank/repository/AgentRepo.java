@@ -13,4 +13,5 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface AgentRepo extends JpaRepository<Agent, Long> {
     Optional<Agent> findByUsername(String username);
+    Optional<Agent> findByEmail(String Email);
 }

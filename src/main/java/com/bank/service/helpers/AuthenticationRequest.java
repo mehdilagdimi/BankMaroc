@@ -4,14 +4,12 @@ import com.bank.model.UserRole;
 import lombok.*;
 
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 @RequiredArgsConstructor
-public class RegistrationRequest {
-     private final String username;
+public class AuthenticationRequest {
     private final String email;
     private final String password;
-    private final UserRole userRole;
-    private final String CIN;
-    private final String telephone;
+    private final String userRole;
 }

@@ -14,10 +14,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @Entity
-public class Agent extends User implements UserDetails {
+public class Agent extends User {
 
-    private Boolean locked = false;
-    private Boolean enabled = false;
 
     @OneToMany(mappedBy = "agent")
     private List<Compte> comptes;
@@ -26,49 +24,5 @@ public class Agent extends User implements UserDetails {
         super(username, email, password, userRole);
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(getUserRole().name());
-        return Collections.singletonList(simpleGrantedAuthority);
-    }
 
-    @Override
-    public String getUsername() {
-        return super.getUsername();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public String getEmail() {
-        return super.getEmail();
-    }
-
-    @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
-
-    @Override
-    public UserRole getUserRole() {
-        return super.getUserRole();
-    }
 }

@@ -14,15 +14,13 @@ import java.util.Collections;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Client extends User implements UserDetails {
+public class Client extends User {
     private String CIN;
     private String telephone;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private Compte compte;
-    private Boolean locked = false;
-    private Boolean enabled = false;
+
 
     public Client(String username, String email, String password, UserRole userRole, String CIN, String telephone) {
         super(username, email, password, userRole);
@@ -36,44 +34,5 @@ public class Client extends User implements UserDetails {
         return Collections.singletonList(simpleGrantedAuthority);
     }
 
-    @Override
-    public String getUsername() {
-        return super.getUsername();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public String getEmail() {
-        return super.getEmail();
-    }
-
-    @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
-
-    @Override
-    public UserRole getUserRole() {
-        return super.getUserRole();
-    }
 }
 

@@ -15,8 +15,6 @@ public class BankApplication {
 		SpringApplication.run(BankApplication.class, args);
 	}
 
-
-
 	@Bean
 	CommandLineRunner run(AgentService agentService, ClientService clientService){
 		return args -> {
@@ -25,5 +23,4 @@ public class BankApplication {
 			//	clientService.saveClient(new Client("Newclient", "newclient2@gmail.com", "12345678", UserRole.CLIENT, "ED123456", "0332211488"));
 		};
 	}
-
 }
