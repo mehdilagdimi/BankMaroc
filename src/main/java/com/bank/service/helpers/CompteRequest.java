@@ -1,8 +1,6 @@
 package com.bank.service.helpers;
 
-import com.bank.model.Agent;
-import com.bank.model.Client;
-import com.bank.model.Compte;
+import com.bank.model.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +25,6 @@ public class CompteRequest {
     private final Long retraitA;
     private final Long achatQ;
     private final Long achatA;
-    private final Compte compte;
-
+    private final C_Standard c_standard;
+    private final C_Professionnel c_professionnel;
 }

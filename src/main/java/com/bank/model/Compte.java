@@ -28,8 +28,6 @@ public abstract class Compte {
     @ManyToOne
     private Agent agent;
 
-    @OneToMany(mappedBy = "compte")
-    private List<Carte> cartes;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Client client;

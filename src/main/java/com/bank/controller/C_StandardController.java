@@ -28,7 +28,7 @@ public class C_StandardController {
 
     @PostMapping("/registration/addCarteVisa")
     public String addCarteVisa(@RequestBody CompteRequest request) throws Exception {
-        return carteService.saveCarte(request);
+        return carteService.saveCarteVisa(request);
     }
 
     @GetMapping("/registration/standard/{id}")
