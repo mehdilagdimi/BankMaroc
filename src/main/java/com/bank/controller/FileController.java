@@ -35,6 +35,7 @@ public class FileController {
         );
     }
 
+
     @GetMapping("/registration/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) throws Exception {
         File file = null;
