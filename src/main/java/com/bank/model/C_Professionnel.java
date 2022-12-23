@@ -1,5 +1,6 @@
 package com.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class C_Professionnel extends Compte {
 
     @OneToMany(mappedBy = "c_professionnel")
+    @JsonIgnore
     private List<Carte> professionnelCartes;
 
     public C_Professionnel( String type,Client client_id, Agent agent, Long numC) {

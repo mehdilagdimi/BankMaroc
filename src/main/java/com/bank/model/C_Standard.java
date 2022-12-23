@@ -1,5 +1,6 @@
 package com.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 public class C_Standard extends  Compte{
 
     @OneToMany(mappedBy = "c_standard")
+    @JsonIgnore
     private List<Carte> standardCartes;
 
     public C_Standard( String type,Client client_id, Agent agent_id, Long numC) {

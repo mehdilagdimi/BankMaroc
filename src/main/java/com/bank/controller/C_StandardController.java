@@ -55,6 +55,11 @@ public class C_StandardController {
         return c_standardService.retraitByClient(c_standard);
     }
 
+    @PutMapping("/registration/faireAchat")
+    public String faireAchat( @RequestBody Carte carte){
+        return carteService.faireAchat(carte);
+    }
+
 }
 
 

@@ -8,6 +8,6 @@ import com.bank.service.helpers.CompteRequest;
 public interface CompteService {
 
 
-   Double Retrait(Double amount);
+   Double achatRetrait(Double amount);
 
 }

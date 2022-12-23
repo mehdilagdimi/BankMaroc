@@ -4,6 +4,7 @@ import com.bank.model.C_Professionnel;
 import com.bank.model.C_Standard;
 import com.bank.model.Carte;
 import com.bank.model.Compte;
+import com.bank.repository.C_StandardRepo;
 import com.bank.repository.C_professionnelRepo;
 import com.bank.repository.CarteRepo;
 import com.bank.service.helpers.CarteRequest;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Transactional
 public class CarteService {
+    private final C_StandardRepo c_StandardRepo;
     private final CarteRepo carteRepo;
     private final C_professionnelRepo c_professionnelRepo;
     public String addCarte(Carte carte){
@@ -59,16 +61,20 @@ public class CarteService {
         }
     }
 
-   /*     public String saveCartepremium(Carte carte){
-            carte.setCompte(isCompteExists(.getCompte()));
-            carte.setCarte_type(request.getCarte_type());
-            carte.setAchatA(Long.valueOf(15000));
-            carte.setRetraitQ(Long.valueOf(10000));
-            carte.setRetraitA(Long.valueOf(200000));
-            carte.setAchatQ(Long.valueOf(15000));
-            carteRepo.save(carte);
+    public String faireAchat(Carte carte){
+        // comparer entre la val entree et le plateforme ==> l'amount deminuer
+        Carte existsCarte = carteRepo.findById(carte.getId()).orElse(null);
+        C_Standard existsStandard =  c_StandardRepo.findById(carte.getId()).orElse(null);
+        if(existsCarte.getAchatQ() > carte.getAchatQ()){
+            //update amount du compte
+            existsStandard.setAmount(existsStandard.getAmount()- carte.getAchatQ());
+            c_StandardRepo.save(existsStandard);
+            return "vous pouvez faire l'achat car vous n'avez pas depassé la plateforme quotidienne et le montant "+
+                    " est devenu == " +existsStandard.getAmount();
         }
-
-    */
+        else {
+            return "vous ne pouvez pas faire l'achat car vous avez depassé la plateforme quotidienne associé à une carte de type "+carte.getCarte_type();
+        }
+    }
 
 }

@@ -71,7 +71,7 @@ public class C_ProfessionnelServiceImpl implements CompteService{
 
     // retrait by Client !!!!!!!!!!!!
     @Override
-    public Double Retrait(Double amount) {
+    public Double achatRetrait(Double amount) {
         return null;
     }
 

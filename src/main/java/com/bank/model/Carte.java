@@ -1,5 +1,6 @@
 package com.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,9 +24,11 @@ public class Carte {
     private Long achatA = Long.valueOf(10000);
 
     @ManyToOne
+    @JsonIgnore
     private C_Professionnel c_professionnel;
 
     @ManyToOne
+    @JsonIgnore
     private C_Standard c_standard;
 
     public Carte(String carte_type, C_Standard c_standard) {
