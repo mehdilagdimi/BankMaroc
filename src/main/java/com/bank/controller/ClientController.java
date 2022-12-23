@@ -6,9 +6,11 @@ import com.bank.service.helpers.RegistrationRequest;
 import com.bank.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping
 @RestController
@@ -21,7 +23,10 @@ public class ClientController {
 
     @GetMapping("/clients")
     public ResponseEntity<List<Client>> getClients(){
-        return ResponseEntity.ok().body(clientService.getClients());
+        return Optional
+                .ofNullable( clientService.getClients() )
+                .map(clients -> ResponseEntity.ok().body(clients))          //200 OK
+                .orElseGet( () -> ResponseEntity.notFound().build() );  //404 Not found
     }
 
 
