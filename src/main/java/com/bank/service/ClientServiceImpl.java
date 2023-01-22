@@ -2,6 +2,7 @@ package com.bank.service;
 
 import com.bank.model.Client;
 import com.bank.model.ConfirmationToken;
+import com.bank.model.User;
 import com.bank.repository.ClientRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -55,36 +56,34 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Client> client = clientRepo.findByUsername(username);
+      //  Optional<Client> client = clientRepo.findByUsername(username);
         return clientRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Client not found......"));
     }
 
     public String signUpClient(Client client){
-        boolean userExists = clientRepo.findByUsername(client.getUsername()).isPresent();
-        StringBuilder fileNames = new StringBuilder();
-       // String fileName = client.getId()+image.getOriginalFilename().substring(image.getOriginalFilename().length()-4);
-        //Path fileNameAndPath = Paths.get(uploadDir, fileName);
+        System.out.println( "inside client registration signup");
 
+        boolean userExists = clientRepo.findByUsername(client.getUsername()).isPresent();
         if(userExists) {
             throw new IllegalStateException("Client's username is already used !");
         }
+        System.out.println( "inside client registration signup");
 
         String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword());
-       /* try{
-            Files.write(fileNameAndPath, image.getBytes());
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
-
-        */
         client.setPassword(encodedPassword);
-      //  client.setCIN(fileName);
         clientRepo.save(client);
-
+        System.out.println( "inside client registration signup");
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10), client);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-        return "the client token is : "+token ;
+        return "the client token is : "+token;
+
+    }
+
+    public User loadUserByEmail(String email) throws UsernameNotFoundException {
+//        Optional<Client> client = clientRepo.findByUsername(username);
+        return clientRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Client not found......"));
     }
 }

@@ -19,7 +19,7 @@ import java.util.Collections;
 @Builder
 @Data
 
-public class Client extends User implements UserDetails {
+public class Client extends User {
     private String CIN;
     @Lob
     private byte[] image;
@@ -37,50 +37,6 @@ public class Client extends User implements UserDetails {
         this.telephone = telephone;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(getUserRole().name());
-        return Collections.singletonList(simpleGrantedAuthority);
-    }
 
-    @Override
-    public String getUsername() {
-        return super.getUsername();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public String getEmail() {
-        return super.getEmail();
-    }
-
-    @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
-
-    @Override
-    public UserRole getUserRole() {
-        return super.getUserRole();
-    }
 }
 

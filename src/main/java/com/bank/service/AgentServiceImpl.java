@@ -1,7 +1,7 @@
 package com.bank.service;
 
 import com.bank.model.Agent;
-import com.bank.model.ConfirmationToken;
+import com.bank.model.User;
 import com.bank.repository.AgentRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.bank.model.ConfirmationToken;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -21,7 +22,7 @@ import java.util.*;
 @Transactional
 @Slf4j
 @Primary
-public class AgentServiceImpl implements AgentService, UserDetailsService {
+public class AgentServiceImpl implements AgentService {
     private final AgentRepo agentRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
@@ -31,7 +32,11 @@ public class AgentServiceImpl implements AgentService, UserDetailsService {
         log.info("agent is saving ...");
         return agentRepo.save(agent);
     }
-
+    public User loadUserByEmail(String email) throws UsernameNotFoundException {
+//        Optional<Client> client = clientRepo.findByUsername(username);
+        return agentRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Client not found......"));
+    }
 
     @Override
     public List<Agent> getAgents() {
@@ -39,11 +44,6 @@ public class AgentServiceImpl implements AgentService, UserDetailsService {
         return agentRepo.findAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Agent> agent = agentRepo.findByUsername(username);
-        return agentRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Agent not found......"));
-    }
 
     public String signUpUser(Agent agent){
         boolean userExists = agentRepo.findByUsername(agent.getUsername()).isPresent();

@@ -15,4 +15,5 @@ public class RegistrationRequest {
     private final String CIN;
     private final byte[] image;
     private final String telephone;
+
 }

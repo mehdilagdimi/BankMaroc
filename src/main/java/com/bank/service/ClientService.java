@@ -8,6 +8,6 @@ import java.util.List;
 @Service
 public interface ClientService {
     Client saveClient(Client client);
-  //  Client getClient(String username);
+    //  Client getClient(String username);
     List<Client> getClients();
 }
