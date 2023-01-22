@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.BufferedReader;
 import java.io.IOException;
-
+/*
 @Slf4j
 
 public class JsonObjectAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -36,7 +36,7 @@ public class JsonObjectAuthenticationFilter extends UsernamePasswordAuthenticati
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    } */
 
 
 
@@ -61,8 +61,6 @@ public class JsonObjectAuthenticationFilter extends UsernamePasswordAuthenticati
         super.successfulAuthentication(request, response, chain, authResult);
     }
 
+  }
+
   */
-
-
-
-}
