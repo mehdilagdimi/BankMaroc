@@ -32,7 +32,7 @@ public abstract class User implements UserDetails, Serializable {
     private Boolean locked = false;
     private Boolean enabled = true;
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, UserRole userRole) {
         this.username = username;
         this.email = email;
         this.password = password;

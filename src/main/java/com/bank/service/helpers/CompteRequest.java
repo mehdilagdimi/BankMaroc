@@ -1,11 +1,9 @@
 package com.bank.service.helpers;
 
 import com.bank.model.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@Setter
 @Getter
 @EqualsAndHashCode
 @ToString

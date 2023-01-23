@@ -7,6 +7,7 @@ import com.bank.model.Compte;
 import com.bank.repository.C_StandardRepo;
 import com.bank.repository.C_professionnelRepo;
 import com.bank.repository.CarteRepo;
+import com.bank.service.helpers.CarteProRequest;
 import com.bank.service.helpers.CarteRequest;
 import com.bank.service.helpers.CompteRequest;
 import jakarta.transaction.Transactional;
@@ -45,19 +46,19 @@ public class CarteService {
         }
     }
 
-    public String saveCartePremium(CompteRequest request) throws Exception {
+    public String saveCartePremium(CarteProRequest request) throws Exception {
         if(request.getCarte_type().equalsIgnoreCase("Premium")){
             try {
                 addCarte(
                         new Carte(request.getCarte_type(), request.getC_professionnel(), request.getAchatA(), request.getAchatQ(), request.getRetraitA(), request.getRetraitQ())
                 );
-                return "the carte has saved successfully of the account type ===> "+request.getAchatQ()+"\n carte: "+request.getCarte_type();
+                return "the carte has saved successfully achat ===> "+request.getAchatQ()+"\n carte: "+request.getCarte_type();
             }catch (Exception ex){
                 throw new Exception(ex.getMessage());
             }
         }
         else {
-            return "check the type of the carte must be GAB Visa";
+            return "check the type of the carte must be Premium";
         }
     }
 

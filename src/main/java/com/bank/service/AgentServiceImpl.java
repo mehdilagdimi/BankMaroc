@@ -30,6 +30,8 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public Agent saveAgent(Agent agent) {
         log.info("agent is saving ...");
+        String password = agent.getPassword();
+        agent.setPassword(bCryptPasswordEncoder.encode(password));
         return agentRepo.save(agent);
     }
     public User loadUserByEmail(String email) throws UsernameNotFoundException {

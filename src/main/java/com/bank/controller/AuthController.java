@@ -5,14 +5,17 @@ import com.bank.service.UserServiceImpl;
 import com.bank.service.helpers.AuthenticationRequest;
 import com.bank.service.helpers.JwtHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -21,12 +24,12 @@ public class AuthController {
     private final JwtHandler jwtHandler;
 
 
-    @PostMapping("/auth/{role}")
+    @PostMapping("/registration/auth/{role}")
     public ResponseEntity<String> authenticate(
             @PathVariable String role,
             @RequestBody AuthenticationRequest authenticationRequest
     ) {
-        try{
+        try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authenticationRequest.getEmail() + ":" + role,
@@ -34,13 +37,15 @@ public class AuthController {
             );
 
             final User user = userService.loadUserByUsername(authenticationRequest.getEmail() + ":" + role);
-            if(user != null){
+            if (user != null) {
                 return ResponseEntity.ok(jwtHandler.generateToken(user));
             }
 
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+           e.printStackTrace();
+           return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.status(400).body("Error authenticating user");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body("Error Message");
     }
 }
