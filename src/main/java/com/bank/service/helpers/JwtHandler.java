@@ -5,7 +5,7 @@ import com.bank.model.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -53,7 +53,7 @@ public class JwtHandler {
         private String createToken(Map<String, Object> claims, String subject) {
 
             return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + 3 * 60 * 1000)) //3 mins until expired
+                    .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) //3 mins until expired
                     .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
         }
 
@@ -61,4 +61,5 @@ public class JwtHandler {
             final String username = extractUsername(token);
             return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
         }
+
 }

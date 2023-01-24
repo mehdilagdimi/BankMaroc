@@ -22,6 +22,8 @@ import java.util.*;
 @Transactional
 public class ClientServiceImpl implements ClientService {
 
+    public static String uploadDir = System.getProperty("client.dir")+"src/main/resources/static";
+
     private final ClientRepo clientRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
@@ -69,5 +71,7 @@ public class ClientServiceImpl implements ClientService {
         ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10), client);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         return "the client token is : "+token;
+
     }
+
 }

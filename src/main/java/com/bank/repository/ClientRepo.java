@@ -1,14 +1,12 @@
 package com.bank.repository;
 
-import com.bank.model.Agent;
-import com.bank.model.Client;
-import com.bank.model.Compte;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import com.bank.model.*;
 
 import java.util.Optional;
 

@@ -1,5 +1,6 @@
 package com.bank.controller;
 
+import com.bank.model.C_Professionnel;
 import com.bank.model.C_Standard;
 import com.bank.model.Carte;
 import com.bank.service.C_StandardServiceImpl;
@@ -9,6 +10,8 @@ import com.bank.service.helpers.CompteRequest;
 import com.bank.service.helpers.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping
 @RestController
@@ -25,7 +28,7 @@ public class C_StandardController {
 
     @PostMapping("/registration/addCarteVisa")
     public String addCarteVisa(@RequestBody CompteRequest request) throws Exception {
-        return carteService.saveCarte(request);
+        return carteService.saveCarteVisa(request);
     }
 
     @GetMapping("/registration/standard/{id}")
@@ -33,10 +36,29 @@ public class C_StandardController {
         return c_standardService.getCStandardById(id);
     }
 
-     @PutMapping("/registration/updateCompte")
+     @PutMapping("/registration/updateCompteStandard")
     public C_Standard updateStandard(@RequestBody C_Standard c_standard){
         return c_standardService.updateCStandard(c_standard);
      }
+
+    @GetMapping("/registration/getStandards")
+    public List<C_Standard> getAllStandards(){
+        return c_standardService.getAllStandards();
+    }
+
+    @PutMapping("/registration/depotAmountStandard")
+    public C_Standard depotAmountByAgent(@RequestBody C_Standard c_standard){
+        return c_standardService.depotByAgent(c_standard);
+    }
+    @PutMapping("/registration/retraitAmountStandard")
+    public String retraitAmountByClient(@RequestBody C_Standard c_standard){
+        return c_standardService.retraitByClient(c_standard);
+    }
+
+    @PutMapping("/registration/faireAchat")
+    public String faireAchat( @RequestBody Carte carte){
+        return carteService.faireAchat(carte);
+    }
 
 }
 

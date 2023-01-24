@@ -1,19 +1,19 @@
 package com.bank.service;
 
-import com.bank.model.Client;
 import com.bank.model.User;
 import com.bank.model.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
 @Getter
 @Setter
+
 @Service
 public class UserServiceImpl implements UserDetailsService {
 
@@ -40,6 +40,5 @@ public class UserServiceImpl implements UserDetailsService {
        }
        return user;
    }
-
 
 }

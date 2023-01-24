@@ -1,12 +1,12 @@
 package com.bank.controller;
 
-
 import com.bank.model.User;
-import com.bank.service.ClientServiceImpl;
 import com.bank.service.UserServiceImpl;
 import com.bank.service.helpers.AuthenticationRequest;
 import com.bank.service.helpers.JwtHandler;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +29,8 @@ public class AuthController {
             @PathVariable String role,
             @RequestBody AuthenticationRequest authenticationRequest
     ) {
-        try{
+
+        try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authenticationRequest.getEmail() + ":" + role,
@@ -37,13 +38,16 @@ public class AuthController {
             );
 
             final User user = userService.loadUserByUsername(authenticationRequest.getEmail() + ":" + role);
-            if(user != null){
+
+            if (user != null) {
                 return ResponseEntity.ok(jwtHandler.generateToken(user));
             }
 
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+           e.printStackTrace();
+           return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.status(400).body("Error authenticating user");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body("Error Message");
     }
 }

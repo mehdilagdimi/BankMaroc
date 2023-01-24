@@ -33,7 +33,6 @@ public class AgentController {
     }
 
 
-
     @PostMapping("/registration/agent")
     public String register(@RequestBody RegistrationRequest request){
         return registrationService.register(request);

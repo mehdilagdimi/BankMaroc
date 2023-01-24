@@ -1,10 +1,8 @@
 package com.bank.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +13,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
@@ -30,6 +28,8 @@ public abstract class User implements UserDetails, Serializable {
     private String username;
     private String email;
     private String password;
+
+    @NonNull
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
@@ -39,12 +39,14 @@ public abstract class User implements UserDetails, Serializable {
     @Transient
     private List<GrantedAuthority> grantedAuthorityList;
 
+
     public User(String username, String email, String password, UserRole userRole) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
         this.grantedAuthorityList.add(new SimpleGrantedAuthority(userRole.toString()));
+
     }
 
     @Override
@@ -74,5 +76,5 @@ public abstract class User implements UserDetails, Serializable {
     }
 
 
-
 }
+

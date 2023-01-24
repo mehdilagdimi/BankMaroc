@@ -1,5 +1,6 @@
 package com.bank.service;
 
+import com.bank.model.Agent;
 import com.bank.model.C_Professionnel;
 import com.bank.model.C_Standard;
 import com.bank.repository.C_StandardRepo;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -18,6 +21,10 @@ import org.springframework.stereotype.Service;
 
 public class C_ProfessionnelServiceImpl implements CompteService{
     private final C_professionnelRepo c_professionnelRepo;
+
+    public List<C_Professionnel> getAllProfessionnels(){
+       return c_professionnelRepo.findAll();
+    }
 
    // private final C_Professionnel c_professionnel;
 
@@ -39,7 +46,7 @@ public class C_ProfessionnelServiceImpl implements CompteService{
             try {
 
                 addCompteByClient(
-                        new C_Professionnel(request.getType(), request.getClient_id(), request.getAgent_id())
+                        new C_Professionnel(request.getType(), request.getClient_id(), request.getAgent_id(), request.getNumC())
                 );
                 // clientRepo.updateCompte(request.getClient_id().getId(),new C_Standard(request.getId(), request.getType(), request.getAmount(), request.getClient_id(), request.getAgent_id()));
 
@@ -55,23 +62,39 @@ public class C_ProfessionnelServiceImpl implements CompteService{
 
 
 
+    // depot By Agent !!!!!!!
+    public C_Professionnel depotByAgent(C_Professionnel c_professionnel) {
+        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_professionnel.getId()).orElse(null);
+        existsProfessionnel.setAmount(existsProfessionnel.getAmount()+c_professionnel.getAmount());
+        return c_professionnelRepo.save(existsProfessionnel);
+    }
+
+    // retrait by Client !!!!!!!!!!!!
     @Override
-    public Double depot(Double amount) {
+    public Double achatRetrait(Double amount) {
         return null;
     }
 
-    @Override
-    public Double Retrait(Double amount) {
-        return null;
+
+    public String retraitByClient(C_Professionnel c_professionnel) {
+        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_professionnel.getId()).orElse(null);
+        if (existsProfessionnel.getAmount() > c_professionnel.getAmount()) {
+            existsProfessionnel.setAmount(existsProfessionnel.getAmount() - c_professionnel.getAmount());
+            log.info("the old amount {} > new amount {} ", existsProfessionnel.getAmount(), c_professionnel.getAmount());
+            c_professionnelRepo.save(existsProfessionnel);
+            return "le retrait est bien passé , votre solde actuel est :" + existsProfessionnel.getAmount();
+        } else {
+            log.info("the old amount {} < new amount {}", existsProfessionnel.getAmount(), c_professionnel.getAmount());
+            return "Sorry " + c_professionnel.getAmount() + " est plus grand que votre solde ( " + existsProfessionnel.getAmount() + " )";
+        }
     }
 
-
-    public C_Professionnel getCStandardById(Long id){
+    public C_Professionnel getCProfessionnelById(Long id){
         return c_professionnelRepo.findById(id).orElse(null);
     }
 
-    public C_Professionnel updateCStandard(C_Standard c_standard){
-        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_standard.getId()).orElse(null);
+    public C_Professionnel updateCProfessionnel(C_Professionnel c_professionnel){
+        C_Professionnel existsProfessionnel = c_professionnelRepo.findById(c_professionnel.getId()).orElse(null);
         existsProfessionnel.setEnable(true);
         return c_professionnelRepo.save(existsProfessionnel);
     }

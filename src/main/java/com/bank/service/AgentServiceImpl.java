@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.bank.model.ConfirmationToken;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -30,9 +31,10 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public Agent saveAgent(Agent agent) {
         log.info("agent is saving ...");
+        String password = agent.getPassword();
+        agent.setPassword(bCryptPasswordEncoder.encode(password));
         return agentRepo.save(agent);
     }
-
 
     @Override
     public List<Agent> getAgents() {
